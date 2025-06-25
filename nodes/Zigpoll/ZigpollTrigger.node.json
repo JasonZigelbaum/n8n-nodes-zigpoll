@@ -1,0 +1,22 @@
+{
+  "node": "n8n-nodes-base.zigpollTrigger",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": [
+    "Miscellaneous",
+    "Surveys & Forms"
+  ],
+  "resources": {
+    "credentialDocumentation": [
+      {
+        "url": "https://docs.zigpoll.com/api-key"
+      }
+    ],
+    "primaryDocumentation": [
+      {
+        "url": "https://docs.zigpoll.com"
+      }
+    ]
+  },
+  "alias": ["Form", "Survey", "Poll"]
+}
