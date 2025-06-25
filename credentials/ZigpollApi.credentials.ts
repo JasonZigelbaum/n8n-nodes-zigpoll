@@ -10,7 +10,7 @@ export class ZigpollApi implements ICredentialType {
 
   displayName = 'Zigpoll API';
 
-  documentationUrl = 'https://docs.n8n.io/integrations/creating-nodes/build/declarative-style-node/';
+  documentationUrl = 'https://www.zigpoll.com/blog/n8n-integration';
 
   properties: INodeProperties[] = [
     {
