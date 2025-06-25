@@ -1,6 +1,7 @@
 import {
   IAuthenticateGeneric,
   ICredentialType,
+  ICredentialTestRequest,
   INodeProperties,
 } from 'n8n-workflow';
 
@@ -23,6 +24,12 @@ export class ZigpollApi implements ICredentialType {
       headers: {
         'Authentication': '{{$credentials.apiKey}}'
       }
+    },
+  };
+  test: ICredentialTestRequest = {
+    request: {
+      method: 'GET',
+      url: 'https://v1.zigpoll.com/me',
     },
   };
 }
