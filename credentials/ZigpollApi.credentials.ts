@@ -28,8 +28,8 @@ export class ZigpollApi implements ICredentialType {
   };
   test: ICredentialTestRequest = {
     request: {
-      method: 'GET',
-      url: 'https://v1.zigpoll.com/me',
+      baseURL: 'https://v1.zigpoll.com',
+      url: '/me'
     },
   };
 }
