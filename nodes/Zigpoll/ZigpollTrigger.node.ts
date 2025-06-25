@@ -16,7 +16,7 @@ export class ZigpollTrigger implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Zigpoll Trigger',
     icon: { light: 'file:zigpoll.svg', dark: 'file:zigpoll.dark.svg' },
-    name: 'zigpoll',
+    name: 'zigpollTrigger',
     group: ['trigger'],
     version: 1,
     description: 'Triggers when a specific Zigpoll survey is completed',
@@ -42,12 +42,12 @@ export class ZigpollTrigger implements INodeType {
     ],
     properties: [
       {
-        displayName: 'Survey',
+        displayName: 'Survey Name or ID',
         name: 'surveyId',
         type: 'options',
         default: '',
         required: true,
-        description: 'Select the survey to listen for',
+        description: 'Select the survey to listen for. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
         typeOptions: {
           loadOptionsMethod: 'getSurveys',
         },
