@@ -27,7 +27,7 @@ export class ZigpollTrigger implements INodeType {
     outputs: [NodeConnectionType.Main],
     credentials: [
       {
-        name: 'ZigpollApi',
+        name: 'zigpollApi',
         required: true,
         testedBy: 'testZigpollTokenAuth',
       },
@@ -58,7 +58,7 @@ export class ZigpollTrigger implements INodeType {
   methods = {
     loadOptions: {
       async getSurveys(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
-        const credentials = await this.getCredentials('ZigpollApi');
+        const credentials = await this.getCredentials('zigpollApi');
         const response = await this.helpers.request({
           method: 'GET',
           url: 'https://v1.zigpoll.com/polls',
@@ -117,7 +117,7 @@ export class ZigpollTrigger implements INodeType {
         return false;
       },
       async create(this: IHookFunctions): Promise<boolean> {
-        const credentials = await this.getCredentials('ZigpollApi');
+        const credentials = await this.getCredentials('zigpollApi');
         let targetUrl = this.getNodeWebhookUrl('default');
         const pollId = this.getNodeParameter('surveyId') as string;
 
@@ -144,7 +144,7 @@ export class ZigpollTrigger implements INodeType {
         return true;
       },
       async delete(this: IHookFunctions): Promise<boolean> {
-        const credentials = await this.getCredentials('ZigpollApi');
+        const credentials = await this.getCredentials('zigpollApi');
         const staticData = this.getWorkflowStaticData('node');
         const pollId = this.getNodeParameter('surveyId') as string;
 
