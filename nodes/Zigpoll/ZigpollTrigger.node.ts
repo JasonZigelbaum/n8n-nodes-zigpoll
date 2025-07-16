@@ -59,12 +59,9 @@ export class ZigpollTrigger implements INodeType {
     loadOptions: {
       async getSurveys(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
         const credentials = await this.getCredentials('zigpollApi');
-        const response = await this.helpers.request({
+        const response = this.helpers.httpRequestWithAuthentication.call(this, 'zigpollApi', {
           method: 'GET',
           url: 'https://v1.zigpoll.com/polls',
-          headers: {
-            Authorization: `Bearer ${credentials.apiKey}`,
-          },
           json: true
         });
 
@@ -81,14 +78,11 @@ export class ZigpollTrigger implements INodeType {
       ): Promise<INodeCredentialTestResult> {
         const credentials = credential.data;
         const options = {
-          headers: {
-            Authorization: `Bearer ${credentials!.apiKey}`,
-          },
           uri: 'https://v1.zigpoll.com/me',
           json: true,
         };
         try {
-          const response = await this.helpers.request(options);
+          const response = await this.helpers.httpRequestWithAuthentication.call(this, 'zigpollApi', options);
           if (!response._id) {
             return {
               status: 'Error',
@@ -125,12 +119,9 @@ export class ZigpollTrigger implements INodeType {
           targetUrl = targetUrl?.replace('http://localhost:5678', process.env.WEBHOOK_TUNNEL_URL);
         }
 
-        const response = await this.helpers.httpRequest({
+        const response = await this.helpers.httpRequestWithAuthentication.call(this, 'zigpollApi', {
           method: 'POST',
           url: 'https://v1.zigpoll.com/n8n/hooks',
-          headers: {
-            Authorization: `Bearer ${credentials.apiKey}`,
-          },
           body: {
             targetUrl,
             pollId
@@ -154,12 +145,9 @@ export class ZigpollTrigger implements INodeType {
 
         const url = `https://v1.zigpoll.com/n8n/hooks`;
 
-        await this.helpers.httpRequest({
+        await this.helpers.httpRequestWithAuthentication.call(this, 'zigpollApi', {
           method: 'DELETE',
           url,
-          headers: {
-            Authorization: `Bearer ${credentials.apiKey}`,
-          },
           body: {
             pollId,
             targetUrl: webhookId
