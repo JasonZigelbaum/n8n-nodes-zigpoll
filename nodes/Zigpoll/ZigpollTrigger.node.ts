@@ -59,9 +59,12 @@ export class ZigpollTrigger implements INodeType {
     loadOptions: {
       async getSurveys(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
         const credentials = await this.getCredentials('zigpollApi');
-        const response = this.helpers.httpRequestWithAuthentication.call(this, 'zigpollApi', {
+        const response = await this.helpers.request({
           method: 'GET',
           url: 'https://v1.zigpoll.com/polls',
+          headers: {
+            Authorization: `Bearer ${credentials.apiKey}`,
+          },
           json: true
         });
 
@@ -78,11 +81,14 @@ export class ZigpollTrigger implements INodeType {
       ): Promise<INodeCredentialTestResult> {
         const credentials = credential.data;
         const options = {
+          headers: {
+            Authorization: `Bearer ${credentials!.apiKey}`,
+          },
           uri: 'https://v1.zigpoll.com/me',
           json: true,
         };
         try {
-          const response = await this.helpers.httpRequestWithAuthentication.call(this, 'zigpollApi', options);
+          const response = await this.helpers.request(options);
           if (!response._id) {
             return {
               status: 'Error',
@@ -111,13 +117,8 @@ export class ZigpollTrigger implements INodeType {
         return false;
       },
       async create(this: IHookFunctions): Promise<boolean> {
-        const credentials = await this.getCredentials('zigpollApi');
         let targetUrl = this.getNodeWebhookUrl('default');
         const pollId = this.getNodeParameter('surveyId') as string;
-
-        if (process.env.WEBHOOK_TUNNEL_URL) {
-          targetUrl = targetUrl?.replace('http://localhost:5678', process.env.WEBHOOK_TUNNEL_URL);
-        }
 
         const response = await this.helpers.httpRequestWithAuthentication.call(this, 'zigpollApi', {
           method: 'POST',
@@ -135,7 +136,6 @@ export class ZigpollTrigger implements INodeType {
         return true;
       },
       async delete(this: IHookFunctions): Promise<boolean> {
-        const credentials = await this.getCredentials('zigpollApi');
         const staticData = this.getWorkflowStaticData('node');
         const pollId = this.getNodeParameter('surveyId') as string;
 
