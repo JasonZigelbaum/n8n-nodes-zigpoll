@@ -59,12 +59,9 @@ export class ZigpollTrigger implements INodeType {
     loadOptions: {
       async getSurveys(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
         const credentials = await this.getCredentials('zigpollApi');
-        const response = await this.helpers.request({
+        const response = await this.helpers.requestWithAuthentication.call(this, 'zigpollApi', {
           method: 'GET',
           url: 'https://v1.zigpoll.com/polls',
-          headers: {
-            Authorization: `Bearer ${credentials.apiKey}`,
-          },
           json: true
         });
 
@@ -81,14 +78,11 @@ export class ZigpollTrigger implements INodeType {
       ): Promise<INodeCredentialTestResult> {
         const credentials = credential.data;
         const options = {
-          headers: {
-            Authorization: `Bearer ${credentials!.apiKey}`,
-          },
-          uri: 'https://v1.zigpoll.com/me',
+          url: 'https://v1.zigpoll.com/me',
           json: true,
         };
         try {
-          const response = await this.helpers.request(options);
+          const response = await this.helpers.requestWithAuthentication.call(this, 'zigpollApi', options);
           if (!response._id) {
             return {
               status: 'Error',
