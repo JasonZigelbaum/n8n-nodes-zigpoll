@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-zigpoll",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Post-purchase, on-site, email and SMS surveys for attribution, exit intent, CRO, NPS, & more",
   "keywords": [
     "n8n-community-node-package"
