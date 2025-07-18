@@ -36,4 +36,4 @@ Please check out the [Zigpoll Docs](https://docs.zigpoll.com/integrations/n8n) f
 ## Resources
 
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
-- [Formbricks Docs](https://docs.zigpoll.com/integrations/n8n)
+- [Zigpoll Docs](https://docs.zigpoll.com/integrations/n8n)
